@@ -93,10 +93,30 @@ a:hover { text-decoration-color: var(--ink); }
 }
 .eyebrow .dot { margin: 0 0.5em; color: var(--control); }
 
-/* Hero */
-.hero { display: grid; gap: var(--s32); padding: var(--s24) 0 var(--s52); align-items: center; }
+/* Hero: text and the form on the left, the phone (at most 560 px tall) on the right, centred against the text.
+   Below 840 px it stacks: text, phone, form. */
+.hero {
+  display: grid;
+  grid-template-areas: "text" "phone" "join";
+  gap: var(--s32);
+  padding: var(--s24) 0 var(--s32);
+  align-items: center;
+}
+.hero-text { grid-area: text; }
+.hero .phone { grid-area: phone; }
+.hero .join { grid-area: join; }
 @media (min-width: 840px) {
-  .hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: var(--s52); padding-top: var(--s52); }
+  .hero {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    grid-template-areas: "text phone" "join phone";
+    gap: var(--s24) var(--s52);
+    padding-top: var(--s24);
+  }
+  /* The text block is as tall as the phone and centred within it; the phone starts at the top, so the fold
+     (about 800 px) shows the headline, the phone and "Join the beta". */
+  .hero-text { min-height: 560px; display: flex; flex-direction: column; justify-content: center; }
+  .hero .phone { align-self: start; }
+  .hero .join { align-self: start; }
 }
 h1 {
   font-size: 40px; line-height: 42px; font-weight: 380; letter-spacing: -0.02em;
@@ -108,7 +128,7 @@ h1 {
 
 .phone {
   justify-self: center;
-  width: min(100%, 340px);
+  width: min(100%, 258px); /* 560 px tall at the video's 600:1304 */
   aspect-ratio: 600 / 1304;
   border-radius: var(--r-sheet);
   overflow: hidden;
@@ -118,15 +138,15 @@ h1 {
 }
 .phone video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-/* Three lines */
-.lines { list-style: none; margin: 0; padding: var(--s32) 0; border-top: 1px solid var(--hairline); display: grid; gap: var(--s24); }
-@media (min-width: 840px) { .lines { grid-template-columns: repeat(3, 1fr); gap: var(--s32); } }
-.lines li { margin: 0; max-width: 36em; }
-.lines strong { display: block; font-weight: 600; letter-spacing: 0.01em; margin-bottom: var(--s4); }
-.lines p { margin: 0; color: var(--ink-soft); }
+/* Two paragraphs */
+.why { padding: var(--s32) 0 var(--s52); border-top: 1px solid var(--hairline); display: grid; gap: var(--s24); }
+@media (min-width: 840px) { .why { grid-template-columns: repeat(2, 1fr); gap: var(--s52); } }
+.why p { margin: 0; color: var(--ink-soft); max-width: 36em; }
+.why strong { color: var(--ink); font-weight: 600; letter-spacing: 0.01em; }
+.why q { quotes: "\201C" "\201D"; }
 
 /* Form */
-.join { padding: var(--s52) 0; }
+.join { padding: 0; }
 .card {
   background: var(--sheet);
   border: 1px solid var(--hairline);
