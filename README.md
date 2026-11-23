@@ -22,11 +22,11 @@ The waitlist is a [Tally](https://tally.so) embed. The form itself is built in T
 Button: **Put me on the list**.
 After submit: *You're on it. I'll be in touch when the first build is ready. Until then, the code and every decision behind it are on GitHub.*
 
-To wire it up, replace `TALLY_FORM_ID` in `index.html` (two places) with the form's id.
+The form id is `xVJzGG`, in `index.html` (two places).
 
 ## Contact
 
-Replace `CONTACT_EMAIL` in `privacy/index.html` (two places) with the dedicated contact address.
+The contact address is `tryloopnyc@gmail.com`, in `privacy/index.html` (two places).
 
 ## Working on it
 
