@@ -40,7 +40,7 @@
           <h2>Join the beta</h2>
           <p>A small TestFlight group of NYC runners, first come. One email when there's a build to install. No newsletter.</p>
           <!-- The Tally form; its fields are listed in the README. -->
-          <iframe src="https://tally.so/embed/xVJzGG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" data-tally-src="https://tally.so/embed/xVJzGG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="560" title="Join the Loop beta"></iframe>
+          <iframe data-tally-src="https://tally.so/embed/xVJzGG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" width="100%" height="560" title="Join the Loop beta"></iframe>
           <p class="fallback">If the form doesn't load, <a href="https://tally.so/r/xVJzGG">open it on Tally</a>.</p>
         </div>
       </section>
@@ -67,6 +67,7 @@
       var v = document.getElementById("build"); v.removeAttribute("autoplay"); v.pause(); v.load();
     }
   </script>
-  <script async src="https://tally.so/widgets/embed.js"></script>
+  <!-- Tally's own snippet: load the form into the iframe, and set the src by hand if the script never arrives. -->
+  <script async src="https://tally.so/widgets/embed.js" onload="Tally.loadEmbeds()" onerror="document.querySelectorAll('iframe[data-tally-src]').forEach(function (e) { e.src = e.dataset.tallySrc; })"></script>
 </body>
 </html>
