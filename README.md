@@ -1,7 +1,7 @@
 # loop-site
 
 The public pages for Loop, the NYC run builder: the waitlist (`/`) and the privacy page (`/privacy/`).
-Two static HTML files, one stylesheet, no framework, served by GitHub Pages from `main`.
+Two static HTML files, one stylesheet, one small script for the form, no framework, served by GitHub Pages from `main`.
 
 The copy is `pages-copy-v1.md` (2026-11-23). The type and colours are the app's own tokens
 (`ios/Loop/Design/Colors.swift` and `Typography.swift` in [project_loop](https://github.com/jaredjgrossi/project_loop)):
@@ -10,7 +10,12 @@ Both fonts are SIL OFL 1.1; the licences ship in `assets/fonts/`.
 
 ## The form
 
-The waitlist is a [Tally](https://tally.so) embed. The form itself is built in Tally with these fields, in this order:
+The waitlist is the site's own HTML form (`index.html`, styled in `assets/site.css`). `assets/form.js` posts each
+entry to Tally's respond endpoint for form `xVJzGG` (`https://api.tally.so/forms/xVJzGG/respond`), with the same
+payload Tally's own page sends: the questions' group ids as keys, choices as arrays of option ids. Entries land in
+Tally like any other. If a post fails, the page says so and links to the form on Tally.
+
+The Tally form has these questions, in this order; the ids in `form.js` come from its definition (`tally.so/r/xVJzGG`):
 
 1. Email (required)
 2. Where do you usually start your runs? (neighborhood, free text)
@@ -19,10 +24,10 @@ The waitlist is a [Tally](https://tally.so) embed. The form itself is built in T
 5. iPhone? (yes / no) — the beta is iPhone only
 6. Anything you want Loop to get right? (optional, free text)
 
-Button: **Put me on the list**.
-After submit: *You're on it. I'll be in touch when the first build is ready. Until then, the code and every decision behind it are on GitHub.*
+Button: **Put me on the list**. After submit the page shows: *You're on it. I'll be in touch when the first build is
+ready. Until then, the code and every decision behind it are on GitHub.*
 
-The form id is `xVJzGG`, in `index.html` (two places).
+If a question is added or reordered in Tally, update the ids in `form.js`.
 
 ## Contact
 
