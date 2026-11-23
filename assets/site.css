@@ -1,5 +1,5 @@
-/* Loop site. Tokens are the app's (ios/Loop/Design/Colors.swift and Typography.swift on main):
-   Paper by default, Night when the system asks for dark. */
+/* Loop site. One centred column, 720 px at most. Tokens are the app's (ios/Loop/Design/Colors.swift and
+   Typography.swift on main): Paper by default, Night when the system asks for dark. Spacing: 24 / 48 / 96. */
 
 @font-face {
   font-family: "Fraunces";
@@ -27,10 +27,11 @@
   --action: #2C3A8F;
   --on-action: #FBF6EA;
   --accent: #D2492A;         /* accentStart */
+  --alert: #B23A1B;
   --focus: #2C3A8F;
 
-  --s4: 4px; --s8: 8px; --s12: 12px; --s16: 16px; --s24: 24px; --s32: 32px; --s52: 52px;
-  --r-thumb: 8px; --r-button: 14px; --r-sheet: 24px;
+  --s1: 24px; --s2: 48px; --s3: 96px;
+  --r-input: 8px; --r-button: 14px; --r-screen: 32px; --r-device: 44px;
 
   --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
   --sans: "Instrument Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
@@ -49,6 +50,7 @@
     --action: #9AA8F0;
     --on-action: #14182E;
     --accent: #F0764F;
+    --alert: #FF8A66;
     --focus: #9AA8F0;
   }
 }
@@ -68,20 +70,25 @@ a { color: inherit; text-decoration-color: var(--control); text-underline-offset
 a:hover { text-decoration-color: var(--ink); }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
 
-.wrap { width: min(100% - 2 * var(--s16), 1040px); margin-inline: auto; }
-@media (min-width: 720px) { .wrap { width: min(100% - 2 * var(--s32), 1040px); } }
+.wrap { width: min(100% - 2 * var(--s1), 720px); margin-inline: auto; }
 
 /* Fraunces, as the app sets it: optical size follows the point size, SOFT and WONK off. */
-.serif, h1, h2, .sub, .wordmark {
+h1, h2, .sub, .wordmark, .intro {
   font-family: var(--serif);
   font-optical-sizing: auto;
   font-variation-settings: "SOFT" 0, "WONK" 0;
 }
 
+/* Sections stack in one column; a hairline rule between them. */
+.section { padding: var(--s2) 0; border-top: 1px solid var(--hairline); }
+@media (min-width: 720px) { .section { padding: var(--s3) 0; } }
+.section.first { border-top: 0; padding-top: var(--s1); }
+@media (min-width: 720px) { .section.first { padding-top: var(--s2); } }
+
 /* Header */
-.top { display: flex; align-items: center; justify-content: space-between; padding: var(--s24) 0; }
+.top { display: flex; align-items: center; justify-content: space-between; padding: var(--s1) 0; }
 .wordmark { font-size: 22px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; }
-.top nav { display: flex; gap: var(--s24); }
+.top nav { display: flex; gap: var(--s1); }
 .top nav a { font-size: 12.5px; line-height: 16px; font-weight: 500; color: var(--ink-muted); text-decoration: none; }
 .top nav a:hover, .top nav a[aria-current] { color: var(--ink); }
 
@@ -89,94 +96,100 @@ a:hover { text-decoration-color: var(--ink); }
   font-size: 11.5px; line-height: 14px; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--ink-muted);
-  margin: 0 0 var(--s16);
+  margin: 0 0 var(--s1);
 }
 .eyebrow .dot { margin: 0 0.5em; color: var(--control); }
 
-/* Hero: text and the form on the left, the phone (at most 560 px tall) on the right, centred against the text.
-   Below 840 px it stacks: text, phone, form. */
-.hero {
-  display: grid;
-  grid-template-areas: "text" "phone" "join";
-  gap: var(--s32);
-  padding: var(--s24) 0 var(--s32);
-  align-items: center;
-}
-.hero-text { grid-area: text; }
-.hero .phone { grid-area: phone; }
-.hero .join { grid-area: join; }
-@media (min-width: 840px) {
-  .hero {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    grid-template-areas: "text phone" "join phone";
-    gap: var(--s24) var(--s52);
-    padding-top: var(--s24);
-  }
-  /* The text block is as tall as the phone and centred within it; the phone starts at the top, so the fold
-     (about 800 px) shows the headline, the phone and "Join the beta". */
-  .hero-text { min-height: 560px; display: flex; flex-direction: column; justify-content: center; }
-  .hero .phone { align-self: start; }
-  .hero .join { align-self: start; }
-}
 h1 {
   font-size: 40px; line-height: 42px; font-weight: 380; letter-spacing: -0.02em;
-  margin: 0 0 var(--s24); text-wrap: balance;
+  margin: 0 0 var(--s1); text-wrap: balance;
 }
 @media (min-width: 600px) { h1 { font-size: 56px; line-height: 56px; } }
 .sub { font-size: 20px; line-height: 28px; font-weight: 400; color: var(--ink-soft); margin: 0; max-width: 34em; }
-.sub q { quotes: "\201C" "\201D"; }
+q { quotes: "\201C" "\201D"; }
 
-.phone {
-  justify-self: center;
-  width: min(100%, 258px); /* 560 px tall at the video's 600:1304 */
-  aspect-ratio: 600 / 1304;
-  border-radius: var(--r-sheet);
+/* The phone as a device: ink bezel, rounded screen, soft shadow, about 520 px tall, centred. */
+.device {
+  margin: var(--s2) auto 0;
+  width: 252px;
+  padding: 12px;
+  background: var(--ink);
+  border-radius: var(--r-device);
+  box-shadow: 0 30px 60px -28px rgba(43, 38, 32, 0.55), 0 2px 6px rgba(43, 38, 32, 0.18);
+}
+.device .screen {
+  aspect-ratio: 600 / 1304;   /* 228 × 496: the device is 520 px tall */
+  border-radius: var(--r-screen);
   overflow: hidden;
   background: var(--sunken);
-  border: 1px solid var(--hairline);
-  box-shadow: 0 24px 60px -30px rgba(43, 38, 32, 0.45);
 }
-.phone video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.device video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* Two paragraphs */
-.why { padding: var(--s32) 0 var(--s52); border-top: 1px solid var(--hairline); display: grid; gap: var(--s24); }
-@media (min-width: 840px) { .why { grid-template-columns: repeat(2, 1fr); gap: var(--s52); } }
-.why p { margin: 0; color: var(--ink-soft); max-width: 36em; }
+.why p { margin: 0 0 var(--s1); color: var(--ink-soft); }
+.why p:last-child { margin-bottom: 0; }
 .why strong { color: var(--ink); font-weight: 600; letter-spacing: 0.01em; }
-.why q { quotes: "\201C" "\201D"; }
 
 /* Form */
-.join { padding: 0; }
-.card {
+h2 { font-size: 27px; line-height: 31px; font-weight: 400; margin: 0 0 12px; }
+.intro { font-size: 20px; line-height: 28px; color: var(--ink-soft); margin: 0 0 var(--s2); max-width: 34em; }
+.field { margin: 0 0 var(--s1); }
+.field > label, .field > .legend {
+  display: block; font-weight: 600; letter-spacing: 0.01em; margin: 0 0 8px; padding: 0;
+}
+.field .hint { font-weight: 400; color: var(--ink-muted); }
+fieldset.field { border: 0; min-width: 0; padding: 0; margin: 0 0 var(--s1); }
+.input {
+  display: block; width: 100%;
+  font: inherit; color: var(--ink);
   background: var(--sheet);
   border: 1px solid var(--hairline);
-  border-radius: var(--r-sheet);
-  padding: var(--s24);
-  max-width: 640px;
+  border-radius: var(--r-input);
+  padding: 11px 12px;
+  min-height: 44px;
 }
-@media (min-width: 600px) { .card { padding: var(--s32); } }
-h2 { font-size: 27px; line-height: 31px; font-weight: 400; margin: 0 0 var(--s12); }
-.card > p { margin: 0 0 var(--s24); color: var(--ink-soft); }
-.card iframe { display: block; width: 100%; border: 0; min-height: 560px; }
-.card .fallback { margin: var(--s16) 0 0; font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+.input::placeholder { color: var(--ink-muted); }
+.input:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
+textarea.input { min-height: 110px; resize: vertical; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { position: relative; }
+.pill input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.pill span {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px;
+  background: var(--sheet); border: 1px solid var(--hairline); border-radius: 999px;
+  color: var(--ink-soft); transition: background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease);
+}
+.pill input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.pill input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.button {
+  font: inherit; font-weight: 600; letter-spacing: 0.01em;
+  color: var(--on-action); background: var(--action);
+  border: 0; border-radius: var(--r-button);
+  min-height: 48px; padding: 0 var(--s1);
+  cursor: pointer;
+}
+.button:disabled { opacity: 0.6; cursor: default; }
+.note { margin: 12px 0 0; font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+.error { color: var(--alert); }
+.done { font-family: var(--serif); font-optical-sizing: auto; font-variation-settings: "SOFT" 0, "WONK" 0; font-size: 20px; line-height: 28px; color: var(--ink-soft); margin: 0; max-width: 34em; }
 
 /* Privacy */
-.prose { max-width: 660px; padding: var(--s24) 0 var(--s52); }
+.prose { max-width: 660px; }
 .prose h1 { font-size: 40px; line-height: 44px; }
-.prose .intro { font-family: var(--serif); font-optical-sizing: auto; font-variation-settings: "SOFT" 0, "WONK" 0; font-size: 20px; line-height: 28px; color: var(--ink-soft); margin: 0 0 var(--s32); }
-.prose h2 { font-size: 24px; line-height: 28px; margin: var(--s32) 0 var(--s12); }
+.prose .intro { margin-bottom: var(--s1); }
+.prose h2 { font-size: 24px; line-height: 28px; margin: var(--s1) 0 12px; }
 .prose p, .prose li { color: var(--ink-soft); }
-.prose p { margin: 0 0 var(--s12); }
-.prose ul { margin: 0 0 var(--s16); padding-left: 1.1em; }
-.prose li { margin: 0 0 var(--s8); }
+.prose p { margin: 0 0 12px; }
+.prose ul { margin: 0 0 16px; padding-left: 1.1em; }
+.prose li { margin: 0 0 8px; }
 .prose li strong { color: var(--ink); font-weight: 600; letter-spacing: 0.01em; }
-.prose .updated { margin-top: var(--s32); padding-top: var(--s16); border-top: 1px solid var(--hairline); font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+.prose .updated { margin-top: var(--s1); padding-top: 16px; border-top: 1px solid var(--hairline); font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
 .prose .updated em { font-style: normal; }
 .prose .path { white-space: nowrap; }
 
 /* Footer */
-footer { border-top: 1px solid var(--hairline); padding: var(--s24) 0 var(--s52); font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
-footer .row { display: flex; flex-wrap: wrap; gap: var(--s8) var(--s12); align-items: baseline; }
+footer { border-top: 1px solid var(--hairline); padding: var(--s1) 0 var(--s2); font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+footer .row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; }
 footer a { color: var(--ink-muted); }
 footer .sep { color: var(--control); }
 

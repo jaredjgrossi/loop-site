@@ -24,31 +24,72 @@
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <div class="hero-text arrive">
+    <section class="section first">
+      <div class="arrive">
         <p class="eyebrow">NYC<span class="dot">·</span>iPhone<span class="dot">·</span>beta</p>
         <h1>Say the run you want. Loop builds it.</h1>
         <p class="sub"><q>3 miles by the water at 7am</q> becomes a real route, scored on lights per mile, waterfront, crowds at that hour, and what's closed. Built for New York, from the city's own data.</p>
       </div>
-      <div class="phone">
-        <video id="build" autoplay muted loop playsinline poster="assets/thumb-ink-card.png" preload="metadata" aria-label="The build moment: a route is drawn on the map as the sentence is read">
-          <source src="assets/loop-build-moment.mp4" type="video/mp4">
-        </video>
-      </div>
-      <section class="join" id="join">
-        <div class="card">
-          <h2>Join the beta</h2>
-          <p>A small TestFlight group of NYC runners, first come. One email when there's a build to install. No newsletter.</p>
-          <!-- The Tally form; its fields are listed in the README. -->
-          <iframe data-tally-src="https://tally.so/embed/xVJzGG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" width="100%" height="560" title="Join the Loop beta"></iframe>
-          <p class="fallback">If the form doesn't load, <a href="https://tally.so/r/xVJzGG">open it on Tally</a>.</p>
+      <div class="device">
+        <div class="screen">
+          <video id="build" autoplay muted loop playsinline poster="assets/thumb-ink-card.png" preload="metadata" aria-label="The build moment: a route is drawn on the map as the sentence is read">
+            <source src="assets/loop-build-moment.mp4" type="video/mp4">
+          </video>
         </div>
-      </section>
+      </div>
     </section>
 
-    <section class="why">
+    <section class="section why">
       <p><strong>Built for 7am, not just for New York.</strong> Loop scores every route on the hour you'll run it. Ferry landings and school drop-off mark the esplanade busy at 8:05; the same request at 7 is clear. Closures are hard rules with expiry dates. Lights are counted per mile. Where the data runs out, the card says <em>not scored</em> instead of guessing.</p>
       <p><strong>It talks like a runner.</strong> <q>A lap of the Reservoir</q> is one lap. <q>Around Prospect Park</q> is the drive loop, and if 3 miles won't cover it, Loop says so and asks.</p>
+    </section>
+
+    <section class="section" id="join">
+      <h2>Join the beta</h2>
+      <p class="intro">A small TestFlight group of NYC runners, first come. One email when there's a build to install. No newsletter.</p>
+
+      <form id="waitlist" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required>
+        </div>
+        <div class="field">
+          <label for="start">Where do you usually start your runs? <span class="hint">neighborhood</span></label>
+          <input class="input" id="start" name="start" type="text" autocomplete="off" required>
+        </div>
+        <fieldset class="field">
+          <legend class="legend">Usual distance</legend>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="distance" value="071f73ad-05ea-400b-b0c2-31b0358b01a8" required><span>Under 3 mi</span></label>
+            <label class="pill"><input type="radio" name="distance" value="1d563f4c-77c6-47d6-82d0-19d6a034eb11"><span>3–5 mi</span></label>
+            <label class="pill"><input type="radio" name="distance" value="ba9ef86c-fa9c-43fa-8e22-d0b7f85590bd"><span>5–8 mi</span></label>
+            <label class="pill"><input type="radio" name="distance" value="8c0da2a1-8f24-45b6-8f08-bf7eb371d1b8"><span>8+ mi</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend class="legend">What do you run with?</legend>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="device" value="fd2306bb-5f47-4096-acc5-8056a988d084" required><span>Apple Watch</span></label>
+            <label class="pill"><input type="radio" name="device" value="d9ddb339-a405-4258-a83e-3020297ef18a"><span>Garmin</span></label>
+            <label class="pill"><input type="radio" name="device" value="ad7095cd-4840-4aa9-a91a-b2c4e5ba44a0"><span>Phone only</span></label>
+            <label class="pill"><input type="radio" name="device" value="b81b5cf3-3de8-4ebe-9965-bfb66ade784e"><span>Other</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend class="legend">iPhone? <span class="hint">the beta is iPhone only</span></legend>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="iphone" value="734c1e92-aacd-4483-b415-0fc64dcf4ec9" required><span>Yes</span></label>
+            <label class="pill"><input type="radio" name="iphone" value="ecc1bac4-b084-4cb6-9c6b-a1006e3006ca"><span>No</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="wants">Anything you want Loop to get right? <span class="hint">optional</span></label>
+          <textarea class="input" id="wants" name="wants" rows="4"></textarea>
+        </div>
+        <button class="button" type="submit">Put me on the list</button>
+        <p class="note" id="status" aria-live="polite"></p>
+      </form>
+      <p class="done" id="done" hidden>You're on it. I'll be in touch when the first build is ready. Until then, the code and every decision behind it are on <a href="https://github.com/jaredjgrossi/project_loop">GitHub</a>.</p>
     </section>
   </main>
 
@@ -67,7 +108,6 @@
       var v = document.getElementById("build"); v.removeAttribute("autoplay"); v.pause(); v.load();
     }
   </script>
-  <!-- Tally's own snippet: load the form into the iframe, and set the src by hand if the script never arrives. -->
-  <script async src="https://tally.so/widgets/embed.js" onload="Tally.loadEmbeds()" onerror="document.querySelectorAll('iframe[data-tally-src]').forEach(function (e) { e.src = e.dataset.tallySrc; })"></script>
+  <script src="assets/form.js" defer></script>
 </body>
 </html>
