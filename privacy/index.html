@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loop — What Loop knows, and what it doesn't</title>
+  <meta name="description" content="What leaves your phone when you use Loop, where it goes, how long it's kept, and how to make it go away.">
+  <meta name="theme-color" content="#F4EDDD" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1C1915" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="../assets/fonts/Fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/InstrumentSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+  <header class="wrap top">
+    <a class="wordmark" href="../">Loop</a>
+    <nav aria-label="Site">
+      <a href="https://github.com/jaredjgrossi/project_loop">GitHub</a>
+      <a href="./" aria-current="page">Privacy</a>
+    </nav>
+  </header>
+
+  <main class="wrap prose">
+    <p class="eyebrow">Privacy</p>
+    <h1>What Loop knows, and what it doesn't</h1>
+    <p class="intro">Loop is a one-person project. This page says plainly what leaves your phone, where it goes, how long it's kept, and how to make it go away. It's written to be checked against the code, which is public.</p>
+
+    <h2>What leaves your phone</h2>
+    <ul>
+      <li><strong>The sentence you type</strong>, the time, and the names of places and routes you've saved. These go to Loop's server and then to Anthropic's Claude API, which reads the sentence and returns what you asked for in structured form. The model never receives coordinates.</li>
+      <li><strong>Your location when you send a request</strong>, if location is on, so routes start where you are. It goes to Loop's server only. It is never sent to Anthropic.</li>
+      <li><strong>An anonymous install id</strong>, generated on first launch. No account, no name, no email. It ties your saved routes and ratings together and nothing else.</li>
+      <li><strong>Map tiles.</strong> The map is Mapbox. Like any map, it fetches the tiles for the area you're looking at, so Mapbox sees roughly where the map is centred. <a href="https://www.mapbox.com/legal/privacy">Their privacy policy</a> applies to that.</li>
+      <li><strong>Weather</strong> comes from National Weather Service stations for the city. Your location is not sent to get it.</li>
+    </ul>
+
+    <h2>What the server keeps</h2>
+    <ul>
+      <li><strong>Routes it built for you</strong>, so a route link still works later and “run again” works. Today these are kept until deleted. Before the public beta, routes you neither saved nor marked as run will expire after 30 days.</li>
+      <li><strong>The raw text of requests, for 30 days</strong>, in a private log used only to fix parsing mistakes. Stored routes never keep the text or your location.</li>
+      <li><strong>Your ratings</strong> (“I ran it”, Good / Not for me and the reason), by install id.</li>
+      <li><strong>Counts and costs</strong> of model calls, with no content.</li>
+    </ul>
+
+    <h2>What is never collected</h2>
+    <ul>
+      <li>Name, email, contacts, photos, health data, or anything from other apps.</li>
+      <li>Your location between requests. Loop doesn't track runs; it builds routes.</li>
+      <li>Advertising identifiers. There are no ads and no analytics SDK.</li>
+    </ul>
+
+    <h2>One thing to know</h2>
+    <p>If you type an address into the sentence (“3 miles from 200 Main St”), that address is part of the text and goes to the model like any other words. Use a nearby corner or landmark if you'd rather not.</p>
+
+    <h2>Deleting your data</h2>
+    <p>Email the address below with the install id from <span class="path">Settings → You → About</span>. Everything tied to it (routes, ratings, request log entries) is deleted within a week, and you'll get a reply when it's done. Deleting the app removes everything stored on the phone.</p>
+
+    <h2>Who runs this</h2>
+    <p>Jared Grossi, New York. Contact: <a href="mailto:CONTACT_EMAIL">CONTACT_EMAIL</a>. The server is a single machine; no one else has access to it. The code, including how routes are scored and what is logged, is at <a href="https://github.com/jaredjgrossi/project_loop">github.com/jaredjgrossi/project_loop</a>.</p>
+
+    <p class="updated"><em>Last updated: <time datetime="2026-11-23">23 November 2026</time>. Changes to this page will be noted here with the date.</em></p>
+  </main>
+
+  <footer class="wrap">
+    <div class="row">
+      <span>Built by Jared Grossi in Kips Bay.</span>
+      <span class="sep">·</span><a href="https://github.com/jaredjgrossi/project_loop">GitHub</a>
+      <span class="sep">·</span><a href="./" aria-current="page">Privacy</a>
+      <span class="sep">·</span><span>Map data © <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></span>
+    </div>
+  </footer>
+</body>
+</html>

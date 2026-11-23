@@ -1,0 +1,166 @@
+/* Loop site. Tokens are the app's (ios/Loop/Design/Colors.swift and Typography.swift on main):
+   Paper by default, Night when the system asks for dark. */
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("fonts/InstrumentSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --paper: #F4EDDD;          /* mapLand */
+  --sheet: #FBF6EA;          /* surfaceSheet */
+  --sunken: #EFE6D2;         /* surfaceSunken */
+  --hairline: #E3D8C0;       /* lineHairline */
+  --control: #8A7B66;        /* lineControl */
+  --ink: #2B2620;
+  --ink-soft: #3A322A;
+  --ink-muted: #6B5F52;
+  --action: #2C3A8F;
+  --on-action: #FBF6EA;
+  --accent: #D2492A;         /* accentStart */
+  --focus: #2C3A8F;
+
+  --s4: 4px; --s8: 8px; --s12: 12px; --s16: 16px; --s24: 24px; --s32: 32px; --s52: 52px;
+  --r-thumb: 8px; --r-button: 14px; --r-sheet: 24px;
+
+  --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1C1915;
+    --sheet: #26221C;
+    --sunken: #2F2A23;
+    --hairline: #3A342B;
+    --control: #8F8470;
+    --ink: #F1E9DA;
+    --ink-soft: #DDD3C0;
+    --ink-muted: #B3A793;
+    --action: #9AA8F0;
+    --on-action: #14182E;
+    --accent: #F0764F;
+    --focus: #9AA8F0;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+}
+a { color: inherit; text-decoration-color: var(--control); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+
+.wrap { width: min(100% - 2 * var(--s16), 1040px); margin-inline: auto; }
+@media (min-width: 720px) { .wrap { width: min(100% - 2 * var(--s32), 1040px); } }
+
+/* Fraunces, as the app sets it: optical size follows the point size, SOFT and WONK off. */
+.serif, h1, h2, .sub, .wordmark {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+}
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; padding: var(--s24) 0; }
+.wordmark { font-size: 22px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; }
+.top nav { display: flex; gap: var(--s24); }
+.top nav a { font-size: 12.5px; line-height: 16px; font-weight: 500; color: var(--ink-muted); text-decoration: none; }
+.top nav a:hover, .top nav a[aria-current] { color: var(--ink); }
+
+.eyebrow {
+  font-size: 11.5px; line-height: 14px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--s16);
+}
+.eyebrow .dot { margin: 0 0.5em; color: var(--control); }
+
+/* Hero */
+.hero { display: grid; gap: var(--s32); padding: var(--s24) 0 var(--s52); align-items: center; }
+@media (min-width: 840px) {
+  .hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: var(--s52); padding-top: var(--s52); }
+}
+h1 {
+  font-size: 40px; line-height: 42px; font-weight: 380; letter-spacing: -0.02em;
+  margin: 0 0 var(--s24); text-wrap: balance;
+}
+@media (min-width: 600px) { h1 { font-size: 56px; line-height: 56px; } }
+.sub { font-size: 20px; line-height: 28px; font-weight: 400; color: var(--ink-soft); margin: 0; max-width: 34em; }
+.sub q { quotes: "\201C" "\201D"; }
+
+.phone {
+  justify-self: center;
+  width: min(100%, 340px);
+  aspect-ratio: 600 / 1304;
+  border-radius: var(--r-sheet);
+  overflow: hidden;
+  background: var(--sunken);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 24px 60px -30px rgba(43, 38, 32, 0.45);
+}
+.phone video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Three lines */
+.lines { list-style: none; margin: 0; padding: var(--s32) 0; border-top: 1px solid var(--hairline); display: grid; gap: var(--s24); }
+@media (min-width: 840px) { .lines { grid-template-columns: repeat(3, 1fr); gap: var(--s32); } }
+.lines li { margin: 0; max-width: 36em; }
+.lines strong { display: block; font-weight: 600; letter-spacing: 0.01em; margin-bottom: var(--s4); }
+.lines p { margin: 0; color: var(--ink-soft); }
+
+/* Form */
+.join { padding: var(--s52) 0; }
+.card {
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sheet);
+  padding: var(--s24);
+  max-width: 640px;
+}
+@media (min-width: 600px) { .card { padding: var(--s32); } }
+h2 { font-size: 27px; line-height: 31px; font-weight: 400; margin: 0 0 var(--s12); }
+.card > p { margin: 0 0 var(--s24); color: var(--ink-soft); }
+.card iframe { display: block; width: 100%; border: 0; min-height: 560px; }
+.card .fallback { margin: var(--s16) 0 0; font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+
+/* Privacy */
+.prose { max-width: 660px; padding: var(--s24) 0 var(--s52); }
+.prose h1 { font-size: 40px; line-height: 44px; }
+.prose .intro { font-family: var(--serif); font-optical-sizing: auto; font-variation-settings: "SOFT" 0, "WONK" 0; font-size: 20px; line-height: 28px; color: var(--ink-soft); margin: 0 0 var(--s32); }
+.prose h2 { font-size: 24px; line-height: 28px; margin: var(--s32) 0 var(--s12); }
+.prose p, .prose li { color: var(--ink-soft); }
+.prose p { margin: 0 0 var(--s12); }
+.prose ul { margin: 0 0 var(--s16); padding-left: 1.1em; }
+.prose li { margin: 0 0 var(--s8); }
+.prose li strong { color: var(--ink); font-weight: 600; letter-spacing: 0.01em; }
+.prose .updated { margin-top: var(--s32); padding-top: var(--s16); border-top: 1px solid var(--hairline); font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+.prose .updated em { font-style: normal; }
+.prose .path { white-space: nowrap; }
+
+/* Footer */
+footer { border-top: 1px solid var(--hairline); padding: var(--s24) 0 var(--s52); font-size: 12.5px; line-height: 16px; color: var(--ink-muted); }
+footer .row { display: flex; flex-wrap: wrap; gap: var(--s8) var(--s12); align-items: baseline; }
+footer a { color: var(--ink-muted); }
+footer .sep { color: var(--control); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .arrive { animation: arrive 200ms var(--ease) both; }
+  @keyframes arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
